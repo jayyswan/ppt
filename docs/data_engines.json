@@ -1,0 +1,12 @@
+[
+  {
+    "id": "geometric",
+    "name": "Geometric",
+    "description": "Primitive constructions using only shapes and snapping."
+  },
+  {
+    "id": "regression",
+    "name": "Regression Engine",
+    "description": "Operations derived from chart regression features."
+  }
+]

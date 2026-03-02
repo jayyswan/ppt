@@ -1,0 +1,4 @@
+body { font-family: sans-serif; margin: 1rem; }
+#graph { width: 100%; height: 500px; border: 1px solid #ccc; }
+#docPanel { margin-top: 1rem; }
+#controls { margin-bottom: 0.5rem; }

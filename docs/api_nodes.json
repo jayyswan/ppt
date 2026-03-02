@@ -1,0 +1,67 @@
+[
+  {
+    "id": "unit_square",
+    "name": "Unit square",
+    "type": "Length",
+    "inputs": [],
+    "outputType": "Length",
+    "engine": "primitive",
+    "rounding": "none",
+    "description": "Base object with side length 1.",
+    "proofDoc": "proofs/unit_square.md"
+  },
+  {
+    "id": "sqrt2",
+    "name": "√2 via diagonal",
+    "type": "Length",
+    "inputs": [
+      { "name": "u", "type": "Length", "source": "unit_square" }
+    ],
+    "outputType": "Length",
+    "engine": "geometric",
+    "rounding": "none",
+    "description": "Construct the diagonal of a unit square to obtain √2.",
+    "proofDoc": "proofs/sqrt2.md"
+  },
+  {
+    "id": "sqrt3",
+    "name": "√3 via 30° triangle",
+    "type": "Length",
+    "inputs": [
+      { "name": "u", "type": "Length", "source": "unit_square" }
+    ],
+    "outputType": "Length",
+    "engine": "geometric",
+    "rounding": "none",
+    "description": "Use equilateral triangle geometry to produce √3.",
+    "proofDoc": "proofs/sqrt3.md"
+  },
+  {
+    "id": "add_lengths",
+    "name": "Addition of lengths",
+    "type": "Length",
+    "inputs": [
+      { "name": "a", "type": "Length" },
+      { "name": "b", "type": "Length" }
+    ],
+    "outputType": "Length",
+    "engine": "geometric",
+    "rounding": "none",
+    "description": "Place segments end‑to‑end to add lengths.",
+    "proofDoc": "proofs/add_lengths.md"
+  },
+  {
+    "id": "multiply_lengths",
+    "name": "Multiplication via similar triangles",
+    "type": "Length",
+    "inputs": [
+      { "name": "a", "type": "Length" },
+      { "name": "b", "type": "Length" }
+    ],
+    "outputType": "Length",
+    "engine": "geometric",
+    "rounding": "none",
+    "description": "Construct product of two lengths using similar triangles.",
+    "proofDoc": "proofs/multiply_lengths.md"
+  }
+]

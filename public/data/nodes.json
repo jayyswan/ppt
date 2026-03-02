@@ -1,0 +1,746 @@
+{
+  "nodes": [
+    {
+      "id": "unit_square",
+      "name": "Unit Square",
+      "type": "number",
+      "output_type": "Number",
+      "description": "The base unit of measure for all constructions. A square of side length 1, held constant by Shift-constraining. All other numbers are defined relative to this unit.",
+      "dependencies": [],
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Shift-Constrain"
+        ],
+        "steps": [
+          "1. Draw a rectangle while holding SHIFT to constrain it to a perfect square.",
+          "2. Define the side length of this square as 1."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "addition",
+      "name": "Addition (a + b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the sum of two constructible lengths by placing them end-to-end along a reference line.",
+      "dependencies": [],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          },
+          {
+            "name": "b",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping"
+        ],
+        "steps": [
+          "1. Draw an infinite reference line.",
+          "2. Place a square of size a aligned to the start of the line.",
+          "3. Snap a square of size b to the right edge of a.",
+          "4. The total span from the left edge of a to the right edge of b has length a + b."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "subtraction",
+      "name": "Subtraction (a − b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the difference of two constructible lengths. Requires a ≥ b; result is a − b.",
+      "dependencies": [],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          },
+          {
+            "name": "b",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping"
+        ],
+        "steps": [
+          "1. Align a square of size b inside a square of size a, snapping their left edges.",
+          "2. The remaining gap on the right has length a − b.",
+          "3. Snap a new square to this remaining gap."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "multiplication",
+      "name": "Multiplication (a × b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the product of two constructible lengths using the similarity/proportional scaling method. Groups the unit square with b, then scales so the unit snaps to a.",
+      "dependencies": [
+        "unit_square"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          },
+          {
+            "name": "b",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping",
+          "Group (Ctrl+G)",
+          "Proportional Resize (Shift-drag)"
+        ],
+        "steps": [
+          "1. Place a unit square and a square of size b side by side.",
+          "2. Select both and group them (Ctrl+G).",
+          "3. Resize the group proportionally (Shift-drag) until the unit square snaps to size a.",
+          "4. The other square in the group now has side length a × b."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "division",
+      "name": "Division (a ÷ b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the ratio of two constructible lengths using the inverse of the multiplication scaling method.",
+      "dependencies": [
+        "unit_square"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          },
+          {
+            "name": "b",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping",
+          "Group (Ctrl+G)",
+          "Proportional Resize (Shift-drag)"
+        ],
+        "steps": [
+          "1. Place a square of size b and a square of size a side by side.",
+          "2. Group both squares.",
+          "3. Resize the group proportionally until the b square snaps to the unit square size.",
+          "4. The a square now has side length a/b."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "rational_numbers",
+      "name": "Rational Numbers (ℚ)",
+      "type": "class",
+      "output_type": "Set",
+      "description": "All rational numbers are constructible. Integers are built by repeated addition of the unit square; fractions by dividing two integers. Since the constructible numbers are closed under +, −, ×, ÷, we have ℚ ⊆ C.",
+      "dependencies": [
+        "unit_square",
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division"
+      ],
+      "construction": {
+        "method": "composition",
+        "operation": "division",
+        "inputs": {
+          "a": "addition",
+          "b": "addition"
+        }
+      },
+      "proofDoc": "proofs/rational_numbers.md"
+    },
+    {
+      "id": "square_root",
+      "name": "Square Root (√x)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct √x for any constructible x using the circle-rectangle intersection method. Discovered as an early key result in the challenge.",
+      "dependencies": [
+        "unit_square"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "x",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping",
+          "Merge Shapes > Intersect",
+          "Aspect Ratio Lock"
+        ],
+        "steps": [
+          "1. Stretch a unit square upward to form a 1×x rectangle.",
+          "2. Place a circle whose diameter equals x + 1, centered on the bottom edge so it snaps to both left and right edges of the rectangle.",
+          "3. Use Merge Shapes > Intersect to obtain the chord length.",
+          "4. The resulting segment has length √x."
+        ]
+      },
+      "proofDoc": "proofs/square_root.md"
+    },
+    {
+      "id": "euclidean_constructible",
+      "name": "Euclidean Constructible Numbers (𝕂)",
+      "type": "class",
+      "output_type": "Set",
+      "description": "The Euclidean closure of ℚ — the smallest field extension closed under square roots. This is the classical compass-and-straightedge constructible set.",
+      "dependencies": [
+        "rational_numbers",
+        "square_root"
+      ],
+      "construction": {
+        "method": "composition",
+        "operation": "square_root",
+        "inputs": {
+          "x": "rational_numbers"
+        }
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "cube_root",
+      "name": "Cube Root (∛x)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct ∛x for any constructible x via intersection of a circle and ellipse with radii derived from x. Found by popop614. The intersection's y-coordinate satisfies (y³ − x)(y − 2) = 0, so y = ∛x. Proves PowerPoint is strictly more powerful than compass-and-straightedge since ∛2 ∉ 𝕂.",
+      "dependencies": [
+        "unit_square",
+        "square_root",
+        "addition",
+        "subtraction",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "x",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping",
+          "Merge Shapes > Intersect",
+          "Ellipse tool"
+        ],
+        "steps": [
+          "1. Compute R = √((1 − x/2)² + 1), a = √(2·(5/4 − x/4)² + 1/4), b = a/√2.",
+          "2. Construct a rectangle of width 1/2 with squares of size x/2 + 1 and x/4 + 3/4 aligned.",
+          "3. Center a circle of radius R on the upper-right corner of the (x/2 + 1) square.",
+          "4. Center an ellipse with semi-axes a and b on the upper-left corner of the (x/4 + 3/4) square.",
+          "5. Intersect the circle and ellipse (use a red reference line if needed for snapping to the vertex).",
+          "6. The height of the intersection point is ∛x.",
+          "7. Proof: intersection satisfies y⁴ − 2y³ − xy + 2x = 0, which factors as (y³ − x)(y − 2) = 0."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "bezier_curve",
+      "name": "Arbitrary Bézier Curve",
+      "type": "operation",
+      "output_type": "Curve",
+      "description": "Construct an arbitrary cubic Bézier curve with constructible control points (P0, P1, P2, P3). Found by Arglin Kampling. Uses reference triangles scaled by 6× and 3×, then Merge Shapes > Union and Smooth Point editing. Enables construction of any algebraic curve expressible as a cubic Bézier.",
+      "dependencies": [
+        "rational_numbers",
+        "multiplication"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "P0",
+            "type": "Number"
+          },
+          {
+            "name": "P1",
+            "type": "Number"
+          },
+          {
+            "name": "P2",
+            "type": "Number"
+          },
+          {
+            "name": "P3",
+            "type": "Number"
+          }
+        ],
+        "returns": "Curve"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Snapping",
+          "Merge Shapes > Union",
+          "Edit Points",
+          "Smooth Point"
+        ],
+        "steps": [
+          "1. Construct squares snapped to control points P0, P1, P2, P3 with upper-right corners at the control points.",
+          "2. Compute U' = P3 + 6(P0 − P1): construct reference triangle for P1 using vector P1→P0 scaled ×6 from P3.",
+          "3. Compute V' = P3 + 3(P3 − P2): construct reference triangle for P2 using vector P2→P3 scaled ×3 from P3.",
+          "4. Add supporting shapes between the reference triangles, then apply Merge Shapes > Union.",
+          "5. Right-click the result → Edit Points.",
+          "6. Right-click the left control handle → Smooth Point.",
+          "7. Right-click the right control handle → Smooth Point.",
+          "8. Cull remaining vertices as needed.",
+          "9. Derivation: U' and V' follow from PowerPoint's Smooth Point handle-averaging behavior for handles spaced 1/3 along each segment."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "parabola",
+      "name": "Parabola (y = x²)",
+      "type": "number",
+      "output_type": "Curve",
+      "description": "Construct the parabola y = x² on [0,1] using the Bézier method. Found by Arglin Kampling. Control points: A=(0,0), B=(1/3,0), C=(2/3,1/3), D=(1,1). To extend to [0,n], scale so height = width². Can be mirrored/rotated to yield y = √x.",
+      "dependencies": [
+        "bezier_curve",
+        "rational_numbers"
+      ],
+      "construction": {
+        "method": "composition",
+        "operation": "bezier_curve",
+        "inputs": {
+          "P0": "rational_numbers",
+          "P1": "rational_numbers",
+          "P2": "rational_numbers",
+          "P3": "rational_numbers"
+        }
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "cubic_curve",
+      "name": "Cubic Curve (y = x³)",
+      "type": "number",
+      "output_type": "Curve",
+      "description": "Construct the cubic y = x³ on [0,1] using the Bézier method. Found by Arglin Kampling. Control points: A=(0,0), B=(1/3,0), C=(2/3,0), D=(1,1). To extend to [0,n], scale so height = width³. Can be mirrored/rotated to yield y = ∛x.",
+      "dependencies": [
+        "bezier_curve",
+        "rational_numbers"
+      ],
+      "construction": {
+        "method": "composition",
+        "operation": "bezier_curve",
+        "inputs": {
+          "P0": "rational_numbers",
+          "P1": "rational_numbers",
+          "P2": "rational_numbers",
+          "P3": "rational_numbers"
+        }
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "quintic_root",
+      "name": "Quintic Root (⁵√k)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct ⁵√k for any constructible k. Found by queuequeue and Arglin Kampling. Graph x = y³/√k and y = x²; their intersection satisfies y⁵ = k, so the y-coordinate is ⁵√k.",
+      "dependencies": [
+        "parabola",
+        "cubic_curve",
+        "square_root",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "k",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "septic_root",
+      "name": "Septic Root (⁷√k)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct ⁷√k for any constructible k. Found by queuequeue and Arglin Kampling. Construct x² = y³ via Bézier, intersect with y = x³/k. The intersection height is k^(2/7); taking the square root yields ⁷√k.",
+      "dependencies": [
+        "parabola",
+        "cubic_curve",
+        "square_root",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "k",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "trig_rational_angle",
+      "name": "Trig Functions of Rational Angles",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct any trig function of any rational multiple of a full turn (2πk/n). Found by sunny_lu_89 via SmartArt. Places n equally-spaced circles using Insert > SmartArt > Cycle > Basic Cycle, extracts cot(πk/n) from rectangle proportions, then derives all other trig values.",
+      "dependencies": [
+        "rational_numbers",
+        "square_root",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "k",
+            "type": "Number"
+          },
+          {
+            "name": "n",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "SmartArt (Cycle > Basic Cycle)",
+          "Snapping"
+        ],
+        "steps": [
+          "1. Insert > SmartArt > Cycle > Basic Cycle. Add/remove shapes until there are n circles.",
+          "2. Select the topmost circle and the k-th circle counterclockwise. Copy both outside the SmartArt.",
+          "3. Draw lines snapping to the pasted circles, then snap a rectangle's corners to the tops of the lines.",
+          "4. Scale the rectangle so its height matches a unit square. Width is now cot(πk/n).",
+          "5. Derive remaining functions: tan = 1/cot, sec = √(tan² + 1), cos = 1/sec, sin = cos·tan, csc = 1/sin.",
+          "6. Proof: the n circles are spaced at 2πk/n; half-angle analysis gives cot(πk/n) as the width/height ratio."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "inverse_trig",
+      "name": "Inverse Trig Functions (arcsin, arccos, arctan)",
+      "type": "operation",
+      "output_type": "Angle",
+      "description": "Construct inverse trig functions for any constructible input. Noted as 'obvious the entire time' on 21 Feb 2026 — follows directly from the ability to construct trig values and reverse the geometric construction.",
+      "dependencies": [
+        "trig_rational_angle"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "x",
+            "type": "Number"
+          }
+        ],
+        "returns": "Angle"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "pi",
+      "name": "Pi (π)",
+      "type": "number",
+      "output_type": "Number",
+      "description": "Construct π via circumference scaling. A circle of diameter 1 has circumference π; this arc length is extracted and used as a constructible length. Proven constructible 2 Dec 2025.",
+      "dependencies": [
+        "unit_square"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "radian",
+      "name": "One Radian (1 rad)",
+      "type": "number",
+      "output_type": "Angle",
+      "description": "Construct an angle of exactly 1 radian. Proven constructible 2 Dec 2025 alongside π.",
+      "dependencies": [
+        "pi"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "natural_logarithm",
+      "name": "Natural Logarithm (ln x)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct ln(x) for any constructible x > 0 using the area under the hyperbola y = 1/x from 1 to x. Proven constructible 17 Feb 2026 via arclength/perimeter methods.",
+      "dependencies": [
+        "arc_length",
+        "rational_numbers"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "x",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": "proofs/ln.md"
+    },
+    {
+      "id": "exponentiation",
+      "name": "Exponentiation (a^b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct a raised to the power b for any constructible a and b. Proven constructible 21 Feb 2026 using PowerPoint chart power regression. Also enables e without ACE from this date.",
+      "dependencies": [
+        "natural_logarithm"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "base",
+            "type": "Number"
+          },
+          {
+            "name": "exponent",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": "proofs/exponentiation.md"
+    },
+    {
+      "id": "e_constant",
+      "name": "Euler's Number (e)",
+      "type": "number",
+      "output_type": "Number",
+      "description": "Construct e via 2^(1/ln 2). Since 2^(1/ln 2) = e^(ln 2 / ln 2) = e. First proven constructible 4 Dec 2025 using PowerPoint ACE; proven without ACE 21 Feb 2026.",
+      "dependencies": [
+        "exponentiation",
+        "rational_numbers",
+        "natural_logarithm",
+        "division"
+      ],
+      "construction": {
+        "method": "composition",
+        "operation": "exponentiation",
+        "inputs": {
+          "base": "rational_numbers",
+          "exponent": "division"
+        }
+      },
+      "proofDoc": "proofs/e.md"
+    },
+    {
+      "id": "ellipse_perimeter",
+      "name": "Perimeter of a Constructible Ellipse",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the perimeter of any ellipse with constructible semi-axes. Proven constructible 2 Dec 2025.",
+      "dependencies": [
+        "unit_square",
+        "rational_numbers"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          },
+          {
+            "name": "b",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "arc_length",
+      "name": "Arc Length of Any Constructible Shape",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the arc length (perimeter) of any constructible shape. Proven constructible 17 Feb 2026. This result unlocks ln(x) and subsequently all of exponentiation.",
+      "dependencies": [
+        "bezier_curve",
+        "ellipse_perimeter"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "curve",
+            "type": "Curve"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "lemniscate_constant",
+      "name": "Lemniscate Constant (ϖ)",
+      "type": "number",
+      "output_type": "Number",
+      "description": "Construct the lemniscate constant ϖ = 2∫₀¹ dt/√(1−t⁴), the arc length of the lemniscate of Bernoulli. Proven constructible 18 Feb 2026.",
+      "dependencies": [
+        "arc_length"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "gamma_integer_quarters",
+      "name": "Gamma Function at Integer Quarters (Γ(n/4))",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct Γ(n/4) for any integer n. Proven constructible 17 Feb 2026 as a consequence of arc length constructibility.",
+      "dependencies": [
+        "arc_length",
+        "rational_numbers"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "n",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "color_with_rounding",
+      "name": "Any RGB Color (with rounding)",
+      "type": "class",
+      "output_type": "Set",
+      "description": "Any of the 256³ RGB colors is constructible when integer rounding of channel values is permitted. Proven constructible 27 Nov 2025.",
+      "dependencies": [
+        "rational_numbers"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "color_no_rounding_partial",
+      "name": "Colors of Form FFXYxx / xxXYFF (No Rounding)",
+      "type": "class",
+      "output_type": "Set",
+      "description": "Colors of the form FFXYxx, xxXYFF, or FFxxFF (1 ≤ XY ≤ 254) proven constructible without rounding. Proven 3 Dec 2025.",
+      "dependencies": [
+        "rational_numbers",
+        "square_root"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "color_no_rounding_full",
+      "name": "All Colors Without 255s (No Rounding)",
+      "type": "class",
+      "output_type": "Set",
+      "description": "All RGB colors with no channel equal to 255 proven constructible without rounding. Proven 4 Dec 2025.",
+      "dependencies": [
+        "color_no_rounding_partial",
+        "natural_logarithm"
+      ],
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "power_regression",
+      "name": "Power Regression (Chart Curve Fitting)",
+      "type": "operation",
+      "output_type": "Function",
+      "description": "Use PowerPoint's built-in chart power regression to fit a curve y = ax^b to constructible data points. Discovered 28 Feb 2026. Enables arbitrary septic and octic roots with rational coefficients, and is the mechanism behind general exponentiation a^b.",
+      "dependencies": [
+        "exponentiation"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "data",
+            "type": "Curve"
+          }
+        ],
+        "returns": "Function"
+      },
+      "construction": null,
+      "proofDoc": null
+    },
+    {
+      "id": "octic_root",
+      "name": "Octic Root (⁸√k)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct ⁸√k for any constructible k with rational coefficients using the power regression feature. Confirmed constructible 28 Feb 2026.",
+      "dependencies": [
+        "power_regression",
+        "rational_numbers"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "k",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": null,
+      "proofDoc": null
+    }
+  ]
+}
