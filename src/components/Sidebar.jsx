@@ -6,8 +6,18 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import 'katex/dist/katex.min.css';
 
-export default function Sidebar({ node, onClose }) {
+export default function Sidebar({ node, allNodes, onClose, onNodeSelect }) {
     const [proofContent, setProofContent] = useState('');
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [onClose]);
 
     useEffect(() => {
         if (node && node.proofDoc) {
@@ -28,6 +38,20 @@ export default function Sidebar({ node, onClose }) {
     }, [node]);
 
     if (!node) return null;
+
+    const NodeLink = ({ id }) => {
+        const targetNode = allNodes?.find(n => n.id === id);
+        if (!targetNode) return <span className="font-mono">{id}</span>;
+
+        return (
+            <button
+                onClick={() => onNodeSelect(targetNode)}
+                className="font-mono text-indigo-700 bg-indigo-50 hover:bg-indigo-100 px-2 py-0.5 rounded border border-indigo-200 transition-colors cursor-pointer text-left"
+            >
+                {targetNode.name}
+            </button>
+        );
+    };
 
     return (
         <div style={{ zIndex: 99999, position: 'fixed', right: 0, top: 0, height: '100vh', width: '24rem', backgroundColor: 'white', display: 'flex' }} className="shadow-2xl border-l border-slate-200 flex-col">
@@ -122,16 +146,14 @@ export default function Sidebar({ node, onClose }) {
                             <LinkIcon className="w-4 h-4" /> Construction Recipe
                         </h3>
                         <div className="mb-3 text-xs text-slate-500 font-medium">
-                            Applies operation: <span className="font-mono text-slate-700 bg-slate-100 px-1 rounded">{node.construction.operation}</span>
+                            Applies operation: <NodeLink id={node.construction.operation} />
                         </div>
                         <ul className="space-y-2">
                             {Object.entries(node.construction.inputs).map(([param, depId]) => (
                                 <li key={param} className="bg-slate-50 p-3 rounded-lg border border-slate-200">
                                     <div className="flex justify-between items-center">
                                         <span className="font-semibold text-sm text-slate-700">{param}</span>
-                                        <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-200">
-                                            {depId}
-                                        </span>
+                                        <NodeLink id={depId} />
                                     </div>
                                 </li>
                             ))}
@@ -173,9 +195,7 @@ export default function Sidebar({ node, onClose }) {
                         <h3 className="text-sm font-bold text-slate-800 uppercase mb-2">Direct Dependencies</h3>
                         <div className="flex flex-wrap gap-2">
                             {node.dependencies.map(depId => (
-                                <span key={depId} className="font-mono text-[11px] text-slate-600 bg-slate-100 px-2 py-1 rounded border border-slate-200">
-                                    {depId}
-                                </span>
+                                <NodeLink key={depId} id={depId} />
                             ))}
                         </div>
                     </div>

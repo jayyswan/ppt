@@ -74,7 +74,9 @@ function App() {
           {selectedNode && (
             <Sidebar
               node={selectedNode}
+              allNodes={nodes}
               onClose={() => setSelectedNode(null)}
+              onNodeSelect={setSelectedNode}
             />
           )}
         </>
