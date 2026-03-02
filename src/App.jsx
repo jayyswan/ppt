@@ -13,7 +13,7 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/data/nodes.json')
+    fetch('data/nodes.json')
       .then(r => {
         if (!r.ok) throw new Error("Could not load nodes.json");
         return r.json();
