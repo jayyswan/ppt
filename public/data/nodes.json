@@ -5,7 +5,7 @@
       "name": "Unit Square",
       "type": "number",
       "output_type": "Number",
-      "description": "The base unit of measure for all constructions. A square of side length 1, held constant by Shift-constraining. All other numbers are defined relative to this unit.",
+      "description": "The base unit of measure for all constructions. A square of side length $1$, held constant by Shift-constraining. All other numbers are defined relative to this unit.",
       "dependencies": [],
       "construction": {
         "method": "primitive_steps",
@@ -24,7 +24,7 @@
       "name": "Addition (a + b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the sum of two constructible lengths by placing them end-to-end along a reference line.",
+      "description": "Construct the sum $a + b$ of two constructible lengths by placing them end-to-end along a reference line.",
       "dependencies": [],
       "signature": {
         "params": [
@@ -58,7 +58,7 @@
       "name": "Subtraction (a − b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the difference of two constructible lengths. Requires a ≥ b; result is a − b.",
+      "description": "Construct the difference $a - b$ of two constructible lengths. Requires $a \\geq b$.",
       "dependencies": [],
       "signature": {
         "params": [
@@ -91,7 +91,7 @@
       "name": "Multiplication (a × b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the product of two constructible lengths using the similarity/proportional scaling method. Groups the unit square with b, then scales so the unit snaps to a.",
+      "description": "Construct the product $a \\times b$ of two constructible lengths using the similarity/proportional scaling method. Groups the unit square with $b$, then scales so the unit snaps to $a$.",
       "dependencies": [
         "unit_square"
       ],
@@ -129,7 +129,7 @@
       "name": "Division (a ÷ b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the ratio of two constructible lengths using the inverse of the multiplication scaling method.",
+      "description": "Construct the ratio $a \\div b$ of two constructible lengths using the inverse of the multiplication scaling method.",
       "dependencies": [
         "unit_square"
       ],
@@ -167,7 +167,7 @@
       "name": "Rational Numbers (ℚ)",
       "type": "class",
       "output_type": "Set",
-      "description": "All rational numbers are constructible. Integers are built by repeated addition of the unit square; fractions by dividing two integers. Since the constructible numbers are closed under +, −, ×, ÷, we have ℚ ⊆ C.",
+      "description": "All rational numbers are constructible. Integers are built by repeated addition of the unit square; fractions by dividing two integers. Since the constructible numbers are closed under $+, -, \\times, \\div$, we have $\\mathbb{Q} \\subseteq \\mathbb{C}$.",
       "dependencies": [
         "unit_square",
         "addition",
@@ -190,7 +190,7 @@
       "name": "Square Root (√x)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct √x for any constructible x using the circle-rectangle intersection method. Discovered as an early key result in the challenge.",
+      "description": "Construct $\\sqrt{x}$ for any constructible $x$ using the circle-rectangle intersection method. Discovered as an early key result in the challenge.",
       "dependencies": [
         "unit_square"
       ],
@@ -224,7 +224,7 @@
       "name": "Euclidean Constructible Numbers (𝕂)",
       "type": "class",
       "output_type": "Set",
-      "description": "The Euclidean closure of ℚ — the smallest field extension closed under square roots. This is the classical compass-and-straightedge constructible set.",
+      "description": "The Euclidean closure of $\\mathbb{Q}$ — the smallest field extension closed under square roots. This is the classical compass-and-straightedge constructible set.",
       "dependencies": [
         "rational_numbers",
         "square_root"
@@ -243,7 +243,7 @@
       "name": "Cube Root (∛x)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct ∛x for any constructible x via intersection of a circle and ellipse with radii derived from x. Found by popop614. The intersection's y-coordinate satisfies (y³ − x)(y − 2) = 0, so y = ∛x. Proves PowerPoint is strictly more powerful than compass-and-straightedge since ∛2 ∉ 𝕂.",
+      "description": "Construct $\\sqrt[3]{x}$ for any constructible $x$ via intersection of a circle and ellipse with radii derived from $x$. Found by popop614. The intersection's $y$-coordinate satisfies $(y^3 - x)(y - 2) = 0$, so $y = \\sqrt[3]{x}$. Proves PowerPoint is strictly more powerful than compass-and-straightedge since $\\sqrt[3]{2} \\notin \\mathbb{K}$.",
       "dependencies": [
         "unit_square",
         "square_root",
@@ -284,7 +284,7 @@
       "name": "Arbitrary Bézier Curve",
       "type": "operation",
       "output_type": "Curve",
-      "description": "Construct an arbitrary cubic Bézier curve with constructible control points (P0, P1, P2, P3). Found by Arglin Kampling. Uses reference triangles scaled by 6× and 3×, then Merge Shapes > Union and Smooth Point editing. Enables construction of any algebraic curve expressible as a cubic Bézier.",
+      "description": "Construct an arbitrary cubic Bézier curve with constructible control points $(P_0, P_1, P_2, P_3)$. Found by Arglin Kampling. Uses reference triangles scaled by $6\\times$ and $3\\times$, then Merge Shapes > Union and Smooth Point editing. Enables construction of any algebraic curve expressible as a cubic Bézier.",
       "dependencies": [
         "rational_numbers",
         "multiplication"
@@ -337,7 +337,7 @@
       "name": "Parabola (y = x²)",
       "type": "number",
       "output_type": "Curve",
-      "description": "Construct the parabola y = x² on [0,1] using the Bézier method. Found by Arglin Kampling. Control points: A=(0,0), B=(1/3,0), C=(2/3,1/3), D=(1,1). To extend to [0,n], scale so height = width². Can be mirrored/rotated to yield y = √x.",
+      "description": "Construct the parabola $y = x^2$ on $[0,1]$ using the Bézier method. Found by Arglin Kampling. Control points: $A=(0,0)$, $B=(\\tfrac{1}{3},0)$, $C=(\\tfrac{2}{3},\\tfrac{1}{3})$, $D=(1,1)$. To extend to $[0,n]$, scale so height $=$ width$^2$. Can be mirrored/rotated to yield $y = \\sqrt{x}$.",
       "dependencies": [
         "bezier_curve",
         "rational_numbers"
@@ -359,7 +359,7 @@
       "name": "Cubic Curve (y = x³)",
       "type": "number",
       "output_type": "Curve",
-      "description": "Construct the cubic y = x³ on [0,1] using the Bézier method. Found by Arglin Kampling. Control points: A=(0,0), B=(1/3,0), C=(2/3,0), D=(1,1). To extend to [0,n], scale so height = width³. Can be mirrored/rotated to yield y = ∛x.",
+      "description": "Construct the cubic $y = x^3$ on $[0,1]$ using the Bézier method. Found by Arglin Kampling. Control points: $A=(0,0)$, $B=(\\tfrac{1}{3},0)$, $C=(\\tfrac{2}{3},0)$, $D=(1,1)$. To extend to $[0,n]$, scale so height $=$ width$^3$. Can be mirrored/rotated to yield $y = \\sqrt[3]{x}$.",
       "dependencies": [
         "bezier_curve",
         "rational_numbers"
@@ -381,7 +381,7 @@
       "name": "Trig Functions of Rational Angles",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct any trig function of any rational multiple of a full turn (2πk/n). Found by sunny_lu_89 via SmartArt. Places n equally-spaced circles using Insert > SmartArt > Cycle > Basic Cycle, extracts cot(πk/n) from rectangle proportions, then derives all other trig values.",
+      "description": "Construct any trig function of any rational multiple of a full turn $\\left(\\tfrac{2\\pi k}{n}\\right)$. Found by sunny_lu_89 via SmartArt. Places $n$ equally-spaced circles using Insert > SmartArt > Cycle > Basic Cycle, extracts $\\cot\\!\\left(\\tfrac{\\pi k}{n}\\right)$ from rectangle proportions, then derives all other trig values.",
       "dependencies": [
         "rational_numbers",
         "square_root",
@@ -422,7 +422,7 @@
       "name": "Inverse Trig Functions (arcsin, arccos, arctan)",
       "type": "operation",
       "output_type": "Angle",
-      "description": "Construct inverse trig functions for any constructible input. Noted as 'obvious the entire time' on 21 Feb 2026 — follows directly from the ability to construct trig values and reverse the geometric construction.",
+      "description": "Construct inverse trig functions ($\\arcsin$, $\\arccos$, $\\arctan$) for any constructible input. Noted as 'obvious the entire time' on 21 Feb 2026 — follows directly from the ability to construct trig values and reverse the geometric construction.",
       "dependencies": [
         "trig_rational_angle"
       ],
@@ -443,7 +443,7 @@
       "name": "Pi (π)",
       "type": "number",
       "output_type": "Number",
-      "description": "Construct π by measuring the circumference of a unit circle. A circle of diameter 1 has circumference π; this is extracted using the arc length method.",
+      "description": "Construct $\\pi$ by measuring the circumference of a unit circle. A circle of diameter $1$ has circumference $\\pi$; this is extracted using the arc length method.",
       "dependencies": [
         "unit_square",
         "arc_length"
@@ -467,7 +467,7 @@
       "name": "One Radian (1 rad)",
       "type": "number",
       "output_type": "Angle",
-      "description": "Construct an angle of exactly 1 radian. Proven constructible 2 Dec 2025 alongside π.",
+      "description": "Construct an angle of exactly $1$ radian. Proven constructible 2 Dec 2025 alongside $\\pi$.",
       "dependencies": [
         "pi"
       ],
@@ -479,7 +479,7 @@
       "name": "Natural Logarithm (ln a)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct ln(a) for any constructible a > 0 using the arc length of a parabolic segment. This follows from the specific identity ln(a) = ((a²-1)/a)S + (1-a⁴)/(4a²), where S is the arc length of y = ((a²-1)/4a)x² on [0,1].",
+      "description": "Construct $\\ln(a)$ for any constructible $a > 0$ using the arc length of a parabolic segment. This follows from the identity$$\\ln(a) = \\frac{a^2-1}{a}\\,S + \\frac{1-a^4}{4a^2}$$where $S$ is the arc length of $y = \\frac{a^2-1}{4a}x^2$ on $[0,1]$.",
       "dependencies": [
         "parabola",
         "arc_length",
@@ -520,7 +520,7 @@
       "name": "Logarithm (log_a b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the logarithm base a of b using the change of base formula: log_a b = ln(b) / ln(a).",
+      "description": "Construct the logarithm base $a$ of $b$ using the change of base formula: $\\log_a b = \\ln(b) / \\ln(a)$.",
       "dependencies": [
         "natural_logarithm",
         "division"
@@ -553,7 +553,7 @@
       "name": "Base-2 Exponentiation (2^x)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct 2^x for any constructible x using PowerPoint's exponential trendline feature. By fitting a trendline to the points (0,1) and (1,2) in a bar chart and extracting the curve via EMF, we obtain the function 2^x.",
+      "description": "Construct $2^x$ for any constructible $x$ using PowerPoint's exponential trendline feature. By fitting a trendline to the points $(0,1)$ and $(1,2)$ in a bar chart and extracting the curve via EMF, we obtain the function $2^x$.",
       "dependencies": [
         "unit_square",
         "paste_special_emf",
@@ -592,7 +592,7 @@
       "name": "General Exponentiation (a^b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct a^b for any constructible a > 0 and b. This is implemented via the identity a^b = 2^(b * log2(a)), where log2(a) is computed via the logarithm node.",
+      "description": "Construct $a^b$ for any constructible $a > 0$ and $b$. Implemented via the identity $a^b = 2^{b \\cdot \\log_2 a}$, where $\\log_2 a$ is computed via the logarithm node.",
       "dependencies": [
         "base_2_exponentiation",
         "logarithm",
@@ -625,7 +625,7 @@
       "name": "Euler's Number (e)",
       "type": "number",
       "output_type": "Number",
-      "description": "Construct e via 2^(1/ln 2). Since 2^(1/ln 2) = e^(ln 2 / ln 2) = e. First proven constructible 4 Dec 2025 using PowerPoint ACE; proven without ACE 21 Feb 2026.",
+      "description": "Construct $e$ via $2^{1/\\ln 2}$. Since $2^{1/\\ln 2} = e^{\\ln 2/\\ln 2} = e$. First proven constructible 4 Dec 2025 using PowerPoint ACE; proven without ACE 21 Feb 2026.",
       "dependencies": [
         "exponentiation",
         "rational_numbers",
@@ -647,7 +647,7 @@
       "name": "Perimeter of a Constructible Ellipse",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the perimeter of any ellipse with constructible semi-axes. Proven constructible 2 Dec 2025.",
+      "description": "Construct the perimeter of any ellipse with constructible semi-axes $a$ and $b$. Proven constructible 2 Dec 2025.",
       "dependencies": [
         "unit_square",
         "rational_numbers"
@@ -705,7 +705,7 @@
       "name": "Arc Length",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the arc length of a curve using the EMF decomposition method. Discovered 17 Feb 2026. This allows measuring curved paths by breaking them into segments.",
+      "description": "Construct the arc length of a curve using the EMF decomposition method. Discovered 17 Feb 2026. This allows measuring curved paths by breaking them into straight-line segments.",
       "dependencies": [
         "paste_special_emf"
       ],
@@ -739,7 +739,7 @@
       "name": "Lemniscate Constant (ϖ)",
       "type": "number",
       "output_type": "Number",
-      "description": "Construct the lemniscate constant ϖ = 2∫₀¹ dt/√(1−t⁴), the arc length of the lemniscate of Bernoulli. Proven constructible 18 Feb 2026.",
+      "description": "Construct the lemniscate constant $\\varpi = 2\\int_0^1 \\frac{dt}{\\sqrt{1-t^4}}$, the arc length of the lemniscate of Bernoulli. Proven constructible 18 Feb 2026.",
       "dependencies": [
         "arc_length"
       ],
@@ -751,7 +751,7 @@
       "name": "Gamma Function at Integer Quarters (Γ(n/4))",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct Γ(n/4) for any integer n. Proven constructible 17 Feb 2026 as a consequence of arc length constructibility.",
+      "description": "Construct $\\Gamma(n/4)$ for any integer $n$. Proven constructible 17 Feb 2026 as a consequence of arc length constructibility.",
       "dependencies": [
         "arc_length",
         "rational_numbers"
@@ -773,7 +773,7 @@
       "name": "Power Regression (Chart Curve Fitting)",
       "type": "operation",
       "output_type": "Function",
-      "description": "Use PowerPoint's built-in chart power regression to fit a curve y = ax^b to constructible data points. Discovered 28 Feb 2026. Enables arbitrary septic and octic roots with rational coefficients, and is the mechanism behind general exponentiation a^b.",
+      "description": "Use PowerPoint's built-in chart power regression to fit a curve $y = ax^b$ to constructible data points. Discovered 28 Feb 2026. Enables arbitrary septic and octic roots with rational coefficients, and is the mechanism behind general exponentiation $a^b$.",
       "dependencies": [
         "exponentiation"
       ],

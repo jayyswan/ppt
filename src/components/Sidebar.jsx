@@ -105,9 +105,16 @@ export default function Sidebar({ node, allNodes, onClose, onNodeSelect }) {
                 {/* Description */}
                 <div>
                     <h3 className="text-sm font-bold text-slate-800 uppercase mb-2">Description</h3>
-                    <p className="text-slate-600 leading-relaxed text-sm">
-                        {node.description || "No description provided."}
-                    </p>
+                    <div className="text-slate-600 leading-relaxed text-sm prose prose-slate prose-sm max-w-none prose-p:my-0">
+                        {node.description ? (
+                            <ReactMarkdown
+                                remarkPlugins={[remarkGfm, remarkMath]}
+                                rehypePlugins={[rehypeKatex]}
+                            >
+                                {node.description}
+                            </ReactMarkdown>
+                        ) : "No description provided."}
+                    </div>
                 </div>
 
                 {/* Operation Signature */}
