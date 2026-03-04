@@ -31,6 +31,21 @@ function App() {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden bg-slate-50 font-sans text-slate-800">
+      {/* Report Issue Button */}
+      <a
+        href="https://github.com/jayyswan/ppt/issues/new"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-6 right-6 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-slate-200 shadow-sm text-xs font-medium text-slate-500 hover:text-red-500 hover:border-red-300 hover:shadow-md transition-all duration-200"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
+        Report Issue
+      </a>
+
       {/* App Title UI Overlay */}
       <div className="absolute bottom-6 left-16 z-10 pointer-events-none">
         <h1 className="text-3xl font-black tracking-tight text-slate-800 drop-shadow-sm">
