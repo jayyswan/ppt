@@ -512,12 +512,87 @@
     },
     {
       "id": "natural_logarithm",
-      "name": "Natural Logarithm (ln x)",
+      "name": "Natural Logarithm (ln a)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct ln(x) for any constructible x > 0 using the area under the hyperbola y = 1/x from 1 to x. Proven constructible 17 Feb 2026 via arclength/perimeter methods.",
+      "description": "Construct ln(a) for any constructible a > 0 using the arc length of a parabolic segment. This follows from the specific identity ln(a) = ((a²-1)/a)S + (1-a⁴)/(4a²), where S is the arc length of y = ((a²-1)/4a)x² on [0,1].",
       "dependencies": [
+        "parabola",
         "arc_length",
+        "rational_numbers",
+        "addition",
+        "subtraction",
+        "multiplication",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "a",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Vertical Stretch",
+          "Snapping",
+          "Arithmetic Operations"
+        ],
+        "steps": [
+          "1. Construct the unit parabola y = x² on the interval [0,1].",
+          "2. Calculate the factor k = (a² - 1) / (4a) using constructible arithmetic operations.",
+          "3. Vertically stretch the unit parabola by the factor k (adjusting height relative to width).",
+          "4. Measure the arc length S of the resulting curve using the EMF decomposition method (arc_length).",
+          "5. Combine S and a using the formula ln(a) = ((a² - 1) / a) * S + (1 - a⁴) / (4a²) using arithmetic operations."
+        ]
+      },
+      "proofDoc": "proofs/ln.md"
+    },
+    {
+      "id": "logarithm",
+      "name": "Logarithm (log_a b)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct the logarithm base a of b using the change of base formula: log_a b = ln(b) / ln(a).",
+      "dependencies": [
+        "natural_logarithm",
+        "division"
+      ],
+      "signature": {
+        "params": [
+          {
+            "name": "base",
+            "type": "Number"
+          },
+          {
+            "name": "value",
+            "type": "Number"
+          }
+        ],
+        "returns": "Number"
+      },
+      "construction": {
+        "method": "composition",
+        "operation": "division",
+        "inputs": {
+          "a": "natural_logarithm",
+          "b": "natural_logarithm"
+        }
+      },
+      "proofDoc": null
+    },
+    {
+      "id": "base_2_exponentiation",
+      "name": "Base-2 Exponentiation (2^x)",
+      "type": "operation",
+      "output_type": "Number",
+      "description": "Construct 2^x for any constructible x using PowerPoint's exponential trendline feature. By fitting a trendline to the points (0,1) and (1,2) in a bar chart and extracting the curve via EMF, we obtain the function 2^x.",
+      "dependencies": [
+        "unit_square",
+        "paste_special_emf",
         "rational_numbers"
       ],
       "signature": {
@@ -529,17 +604,35 @@
         ],
         "returns": "Number"
       },
-      "construction": null,
-      "proofDoc": "proofs/ln.md"
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Chart (Bar Chart)",
+          "Exponential Trendline",
+          "Paste Special (Enhanced Metafile)",
+          "Merge Shapes"
+        ],
+        "steps": [
+          "1. Insert a Bar Chart and use the Excel data to create two bars with heights 1 and 2 at positions 0 and 1.",
+          "2. Add an 'Exponential Trendline' to the data series.",
+          "3. Copy the chart and use Paste Special (Enhanced Metafile) to extract the trendline as a vector curve.",
+          "4. Ungroup the EMF and isolate the trendline curve.",
+          "5. Scale and position the curve relative to a coordinate system.",
+          "6. For any constructible x, use Merge Shapes or snapping to find the height of the curve at that position to obtain 2^x."
+        ]
+      },
+      "proofDoc": null
     },
     {
       "id": "exponentiation",
-      "name": "Exponentiation (a^b)",
+      "name": "General Exponentiation (a^b)",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct a raised to the power b for any constructible a and b. Proven constructible 21 Feb 2026 using PowerPoint chart power regression. Also enables e without ACE from this date.",
+      "description": "Construct a^b for any constructible a > 0 and b. This is implemented via the identity a^b = 2^(b * log2(a)), where log2(a) is computed via the logarithm node.",
       "dependencies": [
-        "natural_logarithm"
+        "base_2_exponentiation",
+        "logarithm",
+        "multiplication"
       ],
       "signature": {
         "params": [
@@ -554,7 +647,13 @@
         ],
         "returns": "Number"
       },
-      "construction": null,
+      "construction": {
+        "method": "composition",
+        "operation": "base_2_exponentiation",
+        "inputs": {
+          "x": "multiplication"
+        }
+      },
       "proofDoc": "proofs/exponentiation.md"
     },
     {
@@ -606,14 +705,45 @@
       "proofDoc": null
     },
     {
+      "id": "paste_special_emf",
+      "name": "Paste Special (Enhanced Metafile)",
+      "type": "operation",
+      "output_type": "Set",
+      "description": "A core PowerPoint trick to convert vector strokes into individual objects. By pasting a shape as an Enhanced Metafile and ungrouping it, its component parts (like dashes in a line) become separate, selectable shapes.",
+      "dependencies": [],
+      "signature": {
+        "params": [
+          {
+            "name": "shape",
+            "type": "Curve"
+          }
+        ],
+        "returns": "Set"
+      },
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Paste Special",
+          "Enhanced Metafile",
+          "Ungroup"
+        ],
+        "steps": [
+          "1. Select and copy (Ctrl+C) any object or group.",
+          "2. Go to Paste > Paste Special (or Ctrl+Alt+V).",
+          "3. Choose 'Picture (Enhanced Metafile)' and click OK.",
+          "4. Ungroup the result (Ctrl+Shift+G) twice to convert it into vector objects."
+        ]
+      },
+      "proofDoc": null
+    },
+    {
       "id": "arc_length",
-      "name": "Arc Length of Any Constructible Shape",
+      "name": "Arc Length",
       "type": "operation",
       "output_type": "Number",
-      "description": "Construct the arc length (perimeter) of any constructible shape. Proven constructible 17 Feb 2026. This result unlocks ln(x) and subsequently all of exponentiation.",
+      "description": "Construct the arc length of a curve using the EMF decomposition method. Discovered 17 Feb 2026. This allows measuring curved paths by breaking them into segments.",
       "dependencies": [
-        "bezier_curve",
-        "ellipse_perimeter"
+        "paste_special_emf"
       ],
       "signature": {
         "params": [
@@ -624,7 +754,20 @@
         ],
         "returns": "Number"
       },
-      "construction": null,
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Dashed Outline",
+          "Paste Special",
+          "Ungroup"
+        ],
+        "steps": [
+          "1. Select the curve and apply a dashed outline style.",
+          "2. Copy the curve and use Paste Special (Enhanced Metafile).",
+          "3. Ungroup twice to turn the dashes into individual line segments.",
+          "4. Align the resulting segments end-to-end to measure the total length."
+        ]
+      },
       "proofDoc": null
     },
     {
