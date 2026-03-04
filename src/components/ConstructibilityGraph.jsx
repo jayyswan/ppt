@@ -254,6 +254,24 @@ export default function ConstructibilityGraph({ rawNodes, onNodeSelect, searchQu
         );
     }, [searchQuery, visibleChain, setNodes, rawNodes]);
 
+    // 3. Update edge visibility based on selection
+    useEffect(() => {
+        setEdges((eds) =>
+            eds.map((edge) => {
+                const isVisible = !visibleChain ||
+                    (visibleChain.has(edge.source) && visibleChain.has(edge.target));
+
+                const newOpacity = isVisible ? 1 : 0.05;
+                if ((edge.style?.opacity ?? 1) === newOpacity) return edge;
+
+                return {
+                    ...edge,
+                    style: { ...edge.style, opacity: newOpacity },
+                };
+            })
+        );
+    }, [visibleChain, setEdges]);
+
     const handleNodeClick = useCallback((event, node) => {
         if (onNodeSelect && node && node.id) {
             const rawNode = rawNodes.find(n => n.id === node.id);
