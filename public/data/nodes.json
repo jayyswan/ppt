@@ -805,44 +805,6 @@
       "proofDoc": null
     },
     {
-      "id": "color_with_rounding",
-      "name": "Any RGB Color (with rounding)",
-      "type": "class",
-      "output_type": "Set",
-      "description": "Any of the 256³ RGB colors is constructible when integer rounding of channel values is permitted. Proven constructible 27 Nov 2025.",
-      "dependencies": [
-        "rational_numbers"
-      ],
-      "construction": null,
-      "proofDoc": null
-    },
-    {
-      "id": "color_no_rounding_partial",
-      "name": "Colors of Form FFXYxx / xxXYFF (No Rounding)",
-      "type": "class",
-      "output_type": "Set",
-      "description": "Colors of the form FFXYxx, xxXYFF, or FFxxFF (1 ≤ XY ≤ 254) proven constructible without rounding. Proven 3 Dec 2025.",
-      "dependencies": [
-        "rational_numbers",
-        "square_root"
-      ],
-      "construction": null,
-      "proofDoc": null
-    },
-    {
-      "id": "color_no_rounding_full",
-      "name": "All Colors Without 255s (No Rounding)",
-      "type": "class",
-      "output_type": "Set",
-      "description": "All RGB colors with no channel equal to 255 proven constructible without rounding. Proven 4 Dec 2025.",
-      "dependencies": [
-        "color_no_rounding_partial",
-        "natural_logarithm"
-      ],
-      "construction": null,
-      "proofDoc": null
-    },
-    {
       "id": "power_regression",
       "name": "Power Regression (Chart Curve Fitting)",
       "type": "operation",
