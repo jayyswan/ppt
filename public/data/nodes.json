@@ -377,54 +377,6 @@
       "proofDoc": null
     },
     {
-      "id": "quintic_root",
-      "name": "Quintic Root (⁵√k)",
-      "type": "operation",
-      "output_type": "Number",
-      "description": "Construct ⁵√k for any constructible k. Found by queuequeue and Arglin Kampling. Graph x = y³/√k and y = x²; their intersection satisfies y⁵ = k, so the y-coordinate is ⁵√k.",
-      "dependencies": [
-        "parabola",
-        "cubic_curve",
-        "square_root",
-        "division"
-      ],
-      "signature": {
-        "params": [
-          {
-            "name": "k",
-            "type": "Number"
-          }
-        ],
-        "returns": "Number"
-      },
-      "construction": null,
-      "proofDoc": null
-    },
-    {
-      "id": "septic_root",
-      "name": "Septic Root (⁷√k)",
-      "type": "operation",
-      "output_type": "Number",
-      "description": "Construct ⁷√k for any constructible k. Found by queuequeue and Arglin Kampling. Construct x² = y³ via Bézier, intersect with y = x³/k. The intersection height is k^(2/7); taking the square root yields ⁷√k.",
-      "dependencies": [
-        "parabola",
-        "cubic_curve",
-        "square_root",
-        "division"
-      ],
-      "signature": {
-        "params": [
-          {
-            "name": "k",
-            "type": "Number"
-          }
-        ],
-        "returns": "Number"
-      },
-      "construction": null,
-      "proofDoc": null
-    },
-    {
       "id": "trig_rational_angle",
       "name": "Trig Functions of Rational Angles",
       "type": "operation",
@@ -491,11 +443,23 @@
       "name": "Pi (π)",
       "type": "number",
       "output_type": "Number",
-      "description": "Construct π via circumference scaling. A circle of diameter 1 has circumference π; this arc length is extracted and used as a constructible length. Proven constructible 2 Dec 2025.",
+      "description": "Construct π by measuring the circumference of a unit circle. A circle of diameter 1 has circumference π; this is extracted using the arc length method.",
       "dependencies": [
-        "unit_square"
+        "unit_square",
+        "arc_length"
       ],
-      "construction": null,
+      "construction": {
+        "method": "primitive_steps",
+        "ppt_features": [
+          "Circle Tool",
+          "Snapping"
+        ],
+        "steps": [
+          "1. Draw a circle and snap its width and height to a unit square to ensure diameter 1.",
+          "2. Apply the arc length construction (arc_length) to the circle.",
+          "3. The resulting length is π."
+        ]
+      },
       "proofDoc": null
     },
     {
@@ -821,28 +785,6 @@
           }
         ],
         "returns": "Function"
-      },
-      "construction": null,
-      "proofDoc": null
-    },
-    {
-      "id": "octic_root",
-      "name": "Octic Root (⁸√k)",
-      "type": "operation",
-      "output_type": "Number",
-      "description": "Construct ⁸√k for any constructible k with rational coefficients using the power regression feature. Confirmed constructible 28 Feb 2026.",
-      "dependencies": [
-        "power_regression",
-        "rational_numbers"
-      ],
-      "signature": {
-        "params": [
-          {
-            "name": "k",
-            "type": "Number"
-          }
-        ],
-        "returns": "Number"
       },
       "construction": null,
       "proofDoc": null
