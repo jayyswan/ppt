@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Link as LinkIcon, Box, Cpu } from 'lucide-react';
+import { X, ExternalLink, Link as LinkIcon, Box, Cpu, Copy, Check } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -8,6 +8,15 @@ import 'katex/dist/katex.min.css';
 
 export default function Sidebar({ node, allNodes, onClose, onNodeSelect }) {
     const [proofContent, setProofContent] = useState('');
+    const [copied, setCopied] = useState(false);
+
+    const handleCopyLink = () => {
+        const url = `https://jayyswan.github.io/ppt/#${node.id}`;
+        navigator.clipboard.writeText(url).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000);
+        });
+    };
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -61,9 +70,23 @@ export default function Sidebar({ node, allNodes, onClose, onNodeSelect }) {
                     <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
                         {node.name}
                     </h2>
-                    <span className="text-sm font-mono text-slate-500 bg-slate-200 px-2 py-1 rounded mt-2 inline-block">
-                        {node.id}
-                    </span>
+                    <div className="flex items-center gap-2 mt-2">
+                        <span className="text-sm font-mono text-slate-500 bg-slate-200 px-2 py-1 rounded inline-block">
+                            {node.id}
+                        </span>
+                        <button
+                            onClick={handleCopyLink}
+                            title="Copy link to this node"
+                            className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-medium border transition-all duration-200 ${copied
+                                ? 'bg-emerald-50 text-emerald-600 border-emerald-200'
+                                : 'bg-slate-100 text-slate-400 border-slate-200 hover:bg-indigo-50 hover:text-indigo-600 hover:border-indigo-200'
+                                }`}
+                        >
+                            {copied
+                                ? <><Check className="w-3 h-3" /> Copied!</>
+                                : <><Copy className="w-3 h-3" /> Copy link</>}
+                        </button>
+                    </div>
                 </div>
                 <button
                     onClick={onClose}

@@ -19,7 +19,16 @@ function App() {
         return r.json();
       })
       .then(data => {
-        setNodes(data.nodes || data); // handle either { nodes: [...] } or [...]
+        const allNodes = data.nodes || data;
+        setNodes(allNodes);
+
+        // Deep-link: open node from URL hash, e.g. #arc_length -> id "arc_length"
+        const hashId = window.location.hash.replace(/^#/, '').trim();
+        if (hashId) {
+          const match = allNodes.find(n => n.id === hashId);
+          if (match) setSelectedNode(match);
+        }
+
         setLoading(false);
       })
       .catch(err => {
@@ -80,7 +89,10 @@ function App() {
 
           <ConstructibilityGraph
             rawNodes={nodes}
-            onNodeSelect={setSelectedNode}
+            onNodeSelect={(node) => {
+              setSelectedNode(node);
+              window.location.hash = node ? node.id : '';
+            }}
             searchQuery={searchQuery}
             selectedNodeId={selectedNode?.id}
           />
@@ -90,8 +102,14 @@ function App() {
             <Sidebar
               node={selectedNode}
               allNodes={nodes}
-              onClose={() => setSelectedNode(null)}
-              onNodeSelect={setSelectedNode}
+              onClose={() => {
+                setSelectedNode(null);
+                window.location.hash = '';
+              }}
+              onNodeSelect={(node) => {
+                setSelectedNode(node);
+                window.location.hash = node.id;
+              }}
             />
           )}
         </>
